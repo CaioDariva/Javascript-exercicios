@@ -201,16 +201,32 @@ numbers.sort(function(a, b) {
 console.log(numbers); */
 
 
-// 16 prof mandou mas não fica na ordem crescente, interessante ver o "do while"
-/* const lista = []
+/* // 16 correção 
+const lista = []
 do {
-    let num = +prompt('Número: ');
+    let num = parseInt(prompt('Número: '));
     const exist = lista.find(elem => elem == num);
-    if(exist == undefined) {
-        lista.push(num)
-    };
-    var resp = prompt('Deseja continuar? [S/N] ').toUpperCase()[0];
+    
+    //modo com includes
+    //lista.includes(num) ==false ? lista.push(num) : console.log('Esse número já existe.')
+
+    // modo com IndexOf, se não tem o elemento ele retorna -1
+    //lista.indexOf(num) == -1 ? lista.push(num) : console.log('Esse número já existe.')
+
+    (exist == undefined) ? lista.push(num) : console.log('Esse número já existe.')
+
+//  Operação ternária feita acima e abaixo o modo normal, ternária é só se existe apenas uma linha no if e else
+//      if(exist == undefined) {
+//         lista.push(num)
+//     }else{
+//         console.log('Esse número já existe.')
+//     };
+
+    do {
+        var resp = prompt('Deseja continuar? [S/N] ').toUpperCase()[0];
+    } while (resp != 'S' && resp != 'N');
 } while (resp == 'S');
+
 console.log(lista) */
 
 
@@ -228,16 +244,14 @@ console.log(lista) */
 
 
 //19
-/* function area(a,b){
-    return a * b;
-};
+/* area = (a,b) => (a * b); //código com boas práticas (arrow function)
 tamanho1 = parseInt(prompt("Digite o valor em metros de um lado do terreno: "));
 tamanho2 = parseInt(prompt("Digite o valor em metros do outro lado do terreno: "));
 console.log(`A área do terreno é ${(area(tamanho1, tamanho2)).toFixed(2)} metros quadrados.`); */
 
 
 //20
-/* function voto(a, b){
+/* voto = (a, b) => {
     if (b - a >= 16 && b - a < 18){
         return "VOTO OPCIONAL";
     } else if (b - a < 16){
@@ -251,4 +265,91 @@ anoatual = parseInt(prompt("Digite o ano atual: "));
 console.log(`${voto(anoeleitor, anoatual)}`); */
 
 
-//21
+//24 orreção
+
+/* const rodadas = +prompt('Quantas rodadas você quer jogar? ');
+const qtJogadores = +prompt('Digite a quantidade de jogadores: ');
+const vencedores = [];
+
+for(let c = 0; c <rodadas; c++){
+    let jogos = [];
+    for(let j = 0; j < qtJogadores; j++){
+        let jogo = {
+            nome: `Jogador ${j+1}`,
+            numero : Math.ceil(Math.random() * 6)
+        };
+        jogos.push(jogo);
+        
+        jogos.sort( (a,b) => b.numero - a.numero)
+    }
+    console.log();
+    console.log(`${c + 1}ª Rodada!`);
+    for(let i in jogos){
+        console.log(`${+i + 1}º Lugar: ${jogos[i].nome} tirou ${jogos[i].numero}`);
+        let entries = Object.entries(jogos[i])
+        if (i == 0){
+            let vencedor = entries[0][1]
+            vencedores.push(vencedor)
+        }
+    }
+}
+
+function count(arr){
+    return arr.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {})
+};
+
+const arrayVencedores = Object.entries(count(vencedores));
+console.log(`${arrayVencedores}`)
+for (let v in arrayVencedores){
+    if (v == 0){
+        console.log();
+        console.log(`O grande vencedor foi o ${arrayVencedores[0][0]} ganhando ${arrayVencedores[0][1]} vezes`)
+    }
+}  */
+
+let rodadas = prompt("Digite a quantidade de rodadas: ");
+let qtsJogadores = prompt("Digite a quantidade de jogadores: ");
+let vencedores = [];
+
+for (let c = 0; c < rodadas; c++) {
+    let jogos = [];
+    for (let i = 0; i < qtsJogadores; i++) {
+        let jogo = {
+            nome: "Jogador" + (i + 1),
+            numero: Math.floor(Math.random() * 6 + 1),
+        };
+        jogos.push(jogo);
+
+        jogos.sort((a, b) => {
+            if (b.numero < a.numero) {
+                return -1;
+            } else {
+                return true;
+            }
+        });
+    }
+    console.log("");
+    console.log(`${c + 1}° Rodada: `);
+    for (let j in jogos) {
+        console.log(`${parseInt(j) + 1}° Lugar: ${jogos[j].nome} tirou ${jogos[j].numero}`);
+        let entries = Object.entries(jogos[j]);
+        if (j == 0) {
+            const vencedor = entries[0][1];
+            vencedores.push(vencedor);
+        }
+    }
+}
+
+/* Conta quantos valores repetidos existem em um array e devolve um objeto com a chave sendo o nome do valor repetido e o valor a quantidade de vezes que se repetiu */
+function count(arr) {
+    return arr.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {});
+}
+maisrodadas = 0
+let arrVencedores = Object.entries(count(vencedores));
+console.log(arrVencedores);
+for (i in arrVencedores) {
+    if (arrVencedores[i][1] > arrVencedores[i+1][1]) {
+        let maisrodadas = `${arrVencedores[i][1]}`;
+    }
+}
+console.log(`maior ${maisrodadas}`);
