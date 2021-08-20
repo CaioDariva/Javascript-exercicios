@@ -252,7 +252,7 @@ console.log(`A área do terreno é ${(area(tamanho1, tamanho2)).toFixed(2)} metr
 
 //20
 /* voto = (a, b) => {
-    if (b - a >= 16 && b - a < 18){
+    if ((b - a == 16) || (b - a == 17) || (b - a > 70)){
         return "VOTO OPCIONAL";
     } else if (b - a < 16){
         return "VOTO PROIBIDO";
@@ -260,12 +260,97 @@ console.log(`A área do terreno é ${(area(tamanho1, tamanho2)).toFixed(2)} metr
         return "VOTO OBRIGATÓRIO";
     };
 };
+const dataAtual = new Date();
+const anoAtual = dataAtual.getFullYear();
 anoeleitor = parseInt(prompt("Digite o ano em que você nasceu: "));
-anoatual = parseInt(prompt("Digite o ano atual: "));
-console.log(`${voto(anoeleitor, anoatual)}`); */
+console.log(`${voto(anoeleitor, anoAtual)}`); */
 
 
-//24 orreção
+//21
+/* do {
+    x = Math.floor(Math.random() * 11);
+    y = +prompt("Tente adivinhar um número entre 0 e 10 que o computador escolheu: ")
+    if (y == x){
+        console.log("Você acertou");
+    } else{
+        console.log(`Você errou, o número era ${x}.`)
+    };
+    resp = prompt("Quer jogar novamente? S ou N").toUpperCase()
+} while (resp == "S") */
+
+
+//22
+/* let valor = +prompt("Digite um valor entre 10 e 600 reais para sacar: ")
+while (valor < 10 || valor > 600){
+    console.log("Saque não permitido");
+    valor = +prompt("Digite um valor entre R$10 e R$600: ");
+};
+
+cem = Math.trunc(valor / 100);
+valor = valor - (cem * 100);
+
+cinq = Math.trunc(valor / 50);
+valor = valor - (cinq * 50);
+
+dez = Math.trunc(valor / 10);
+valor = valor - (dez * 10);
+
+cinco = Math.trunc(valor / 5);
+valor = valor - (cinco * 5);
+
+um = valor;
+
+console.log(`Quantidade notas de R$100,00 = ${cem}.
+Quantidade notas de R$50,00 = ${cinq}.
+Quantidade notas de R$10,00 = ${dez}.
+Quantidade notas de R$5,00 = ${cinco}.
+Quantidade notas de R$1,00 = ${um}.`) */
+
+
+//23
+const rodadas = +prompt("Quantas rodadas você quer jogar de Jokenpô?");
+
+pontosPessoa = 0
+pontosPc = 0
+empates = 0
+
+partidas = 0
+do {
+    const jogadaPessoa = prompt("Pedra, papel ou tesoura: ").toUpperCase();
+
+    const jogadas = ["PEDRA", "PAPEL", "TESOURA"];
+    const random = Math.floor(Math.random() * jogadas.length);
+    const jogadaPc = jogadas[random];
+
+    if (jogadaPessoa == "TESOURA" && jogadaPc == "TESOURA"){
+        empates = ++empates
+    } else if (jogadaPessoa == "TESOURA" && jogadaPc == "PEDRA"){
+        pontosPc = ++pontosPc
+    } else if (jogadaPessoa == "TESOURA" && jogadaPc == "PAPEL"){
+        pontosPessoa = ++pontosPessoa
+    } else if (jogadaPessoa == "PEDRA" && jogadaPc == "PEDRA"){
+        empates = ++empates
+    } else if (jogadaPessoa == "PEDRA" && jogadaPc == "PAPEL"){
+        pontosPc = ++pontosPc
+    } else if (jogadaPessoa == "PEDRA" && jogadaPc == "TESOURA"){
+        pontosPessoa = ++pontosPessoa
+    } else if (jogadaPessoa == "PAPEL" && jogadaPc == "PAPEL"){
+        empates = ++empates
+    } else if (jogadaPessoa == "PAPEL" && jogadaPc == "TESOURA"){
+        pontosPc = ++pontosPc
+    } else if (jogadaPessoa == "PAPEL" && jogadaPc == "PEDRA"){
+        pontosPessoa = ++pontosPessoa
+    };
+    partidas = ++partidas;
+    console.log(`PC jogou ${jogadaPc}`);
+} while (partidas != rodadas)
+
+console.log(`Você ganhou ${pontosPessoa} vezes.`)
+console.log(`O computador ganhou ${pontosPc} vezes.`)
+console.log(`Aconteceu ${empates} empates.`)
+
+
+//24 correção
 
 /* const rodadas = +prompt('Quantas rodadas você quer jogar? ');
 const qtJogadores = +prompt('Digite a quantidade de jogadores: ');
@@ -305,51 +390,4 @@ for (let v in arrayVencedores){
         console.log();
         console.log(`O grande vencedor foi o ${arrayVencedores[0][0]} ganhando ${arrayVencedores[0][1]} vezes`)
     }
-}  */
-
-let rodadas = prompt("Digite a quantidade de rodadas: ");
-let qtsJogadores = prompt("Digite a quantidade de jogadores: ");
-let vencedores = [];
-
-for (let c = 0; c < rodadas; c++) {
-    let jogos = [];
-    for (let i = 0; i < qtsJogadores; i++) {
-        let jogo = {
-            nome: "Jogador" + (i + 1),
-            numero: Math.floor(Math.random() * 6 + 1),
-        };
-        jogos.push(jogo);
-
-        jogos.sort((a, b) => {
-            if (b.numero < a.numero) {
-                return -1;
-            } else {
-                return true;
-            }
-        });
-    }
-    console.log("");
-    console.log(`${c + 1}° Rodada: `);
-    for (let j in jogos) {
-        console.log(`${parseInt(j) + 1}° Lugar: ${jogos[j].nome} tirou ${jogos[j].numero}`);
-        let entries = Object.entries(jogos[j]);
-        if (j == 0) {
-            const vencedor = entries[0][1];
-            vencedores.push(vencedor);
-        }
-    }
-}
-
-/* Conta quantos valores repetidos existem em um array e devolve um objeto com a chave sendo o nome do valor repetido e o valor a quantidade de vezes que se repetiu */
-function count(arr) {
-    return arr.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {});
-}
-maisrodadas = 0
-let arrVencedores = Object.entries(count(vencedores));
-console.log(arrVencedores);
-for (i in arrVencedores) {
-    if (arrVencedores[i][1] > arrVencedores[i+1][1]) {
-        let maisrodadas = `${arrVencedores[i][1]}`;
-    }
-}
-console.log(`maior ${maisrodadas}`);
+} */
